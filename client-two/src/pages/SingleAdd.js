@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
+
 const SingleAdd = () => {
   const [firstname, setFname] = useState("");
   const [lastname, setLname] = useState("");
@@ -36,26 +41,33 @@ const SingleAdd = () => {
       });
   };
   return (
-      <div className="information">
-      <label>FirstName:</label>
-      <input type="text" 
-        onChange={(event)=>{
+    <Container>
+      <Form>
+        <Form.Group className="mb-3" controlId="formGroupEmail">
+          <Form.Label>FirstName</Form.Label>
+          <Form.Control type="text" placeholder="FirstName"
+           onChange={(event)=>{
           setFname(event.target.value)
-        }}
-        />
-      <label>LastName:</label>
-      <input type="text" 
-        onChange={(event)=>{
-          setLname(event.target.value)}}
-        />
-        <label>Email:</label>
-      <input type="text" 
-        onChange={(event)=>{
-          setEmail(event.target.value)
-        }}
-        />
-      <button onClick={addEmployee}>Add Employee</button>
-      <ToastContainer
+        }} />
+       </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>LastName</Form.Label>
+            <Form.Control type="text" placeholder="lastname" 
+              onChange={(event)=>{
+              setLname(event.target.value)}}
+              />
+          </Form.Group>
+        <Form.Group className="mb-3">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" 
+            onChange={(event)=>{
+              setEmail(event.target.value)
+            }}/>
+        </Form.Group>
+        <Button variant="primary" type="submit" onClick={addEmployee}>
+          Submit
+        </Button>
+        <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -68,7 +80,10 @@ const SingleAdd = () => {
         />
         {/* Same as */}
       <ToastContainer />
-      </div>
+    </Form>
+  </Container>
+      
+      
   );
 };
 

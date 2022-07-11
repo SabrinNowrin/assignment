@@ -4,6 +4,9 @@ import Axios from "axios";
 import Papa from "papaparse";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import Container from "react-bootstrap/Container";
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
 
 let fileContent = [];
 let filepointer = null;
@@ -108,29 +111,33 @@ function Upload() {
     csvprocess(filepointer);
   }
   return (
-    <form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
-      <input ref={inputRef} type="file" id="input-file-upload" multiple={true} onChange={handleChange} />
-      <label id="label-file-upload" htmlFor="input-file-upload" className={dragActive ? "drag-active" : "" }>
-        <div>
-          <p>Drag and drop your file here or</p>
-          <button className="upload-button" onClick={onButtonClick}>Select a file</button>
-        </div> 
-      </label>
-      { dragActive && <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
-      <button onClick={onUpload}> Upload </button>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        />
-      <ToastContainer />
-    </form>
+    <Container >
+      <Row className="justify-content-center">
+      <form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
+        <input ref={inputRef} type="file" id="input-file-upload" multiple={true} onChange={handleChange} />
+        <label id="label-file-upload" htmlFor="input-file-upload" className={dragActive ? "drag-active" : "" }>
+          <div>
+            <p>Drag and drop your file here or</p>
+            <button className="upload-button" onClick={onButtonClick}>Select a file</button>
+          </div> 
+        </label>
+        { dragActive && <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
+         <Button variant="success" onClick={onUpload}>Upload</Button>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          />
+        <ToastContainer />
+      </form>
+      </Row>
+  </Container>
   );
 }
 

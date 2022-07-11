@@ -1,76 +1,79 @@
+//import "./AllEmployee.css";
+ 
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
-
+import Table from 'react-bootstrap/Table'
+ 
 function AllEmployee() {
   const [items, setItems] = useState([]);
-
+ 
   const [pageCount, setpageCount] = useState(0);
-
+ 
   let size = 5;
-
+ 
   useEffect(() => {
     const getEmployees= async () => {
       const res = await fetch(
-        `http://localhost:3000/api/employees/?page=1&size=${size}`
-        // `https://jsonplaceholder.typicode.com/comments?_page=1&_limit=${limit}`
+        `http://localhost:8080/api/employees/show?page=1&size=${size}`
       );
       const data = await res.json();
-      const total = res.headers.get("x-total-count");
-      setpageCount(Math.ceil(total / limit));
+      console.log(data.totalPages);
+      setpageCount(data.totalPages);
       // console.log(Math.ceil(total/12));
-      setItems(data);
+      setItems(data.employees);
     };
-
-    getComments();
-  }, [limit]);
-
-  const fetchComments = async (currentPage) => {
+ 
+    getEmployees();
+  }, [size]);
+ 
+  const fetchEmployees = async (currentPage) => {
     const res = await fetch(
-      `http://localhost:3004/comments?_page=${currentPage}&_limit=${limit}`
-      // `https://jsonplaceholder.typicode.com/comments?_page=${currentPage}&_limit=${limit}`
+      `http://localhost:8080/api/employees/show?page=${currentPage}&size=${size}`
     );
     const data = await res.json();
-    return data;
+    return data.employees;
   };
-
+ 
   const handlePageClick = async (data) => {
     console.log(data.selected);
-
+ 
     let currentPage = data.selected + 1;
-
-    const commentsFormServer = await fetchComments(currentPage);
-
-    setItems(commentsFormServer);
+ 
+    const employees = await fetchEmployees(currentPage);
+ 
+    setItems(employees);
     // scroll to the top
     //window.scrollTo(0, 0)
   };
   return (
     <div className="container">
-      <div className="row m-2">
+      <Table striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
         {items.map((item) => {
-          return (
-            <div key={item.id} className="col-sm-6 col-md-4 v my-2">
-              <div className="card shadow-sm w-100" style={{ minHeight: 225 }}>
-                <div className="card-body">
-                  <h5 className="card-title text-center h2">Id :{item.id} </h5>
-                  <h6 className="card-subtitle mb-2 text-muted text-center">
-                    {item.email}
-                  </h6>
-                  <p className="card-text">{item.body}</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
+              return (
+                <tr>
+                  <td>{item.firstname}</td>
+                  <td>{item.lastname}</td>
+                  <td>{item.email}</td>
+              </tr>
+              )})}
+        </tbody>
+      </Table>
+ 
       <ReactPaginate
         previousLabel={"previous"}
         nextLabel={"next"}
         breakLabel={"..."}
         pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={3}
+        marginPagesDisplayed={1}
+        pageRangeDisplayed={2}
         onPageChange={handlePageClick}
         containerClassName={"pagination justify-content-center"}
         pageClassName={"page-item"}
@@ -86,5 +89,5 @@ function AllEmployee() {
     </div>
   );
 }
-
+ 
 export default AllEmployee;

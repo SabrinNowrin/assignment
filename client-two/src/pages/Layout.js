@@ -4,7 +4,7 @@ const Layout = () => {
   return (
     <>
       <nav>
-        <Link to="/">
+        <Link to="/" style={{ textDecoration: 'none' , marginTop: '3rem'}}>
             <h1 style={{textAlign:"center", color:"black"}} > TechNext </h1>
         </Link>
         
