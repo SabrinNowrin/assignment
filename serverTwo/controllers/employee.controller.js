@@ -1,6 +1,17 @@
 const db = require("../models/index.js");
 const Employee = db.employees;
+const nodemailer = require("nodemailer");
 const Op = db.Sequelize.Op;
+
+var transporter = nodemailer.createTransport({
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "09ce3257bc5f52",
+    pass: "1892f7f9288acb"
+  }
+});
+
 const getPagination = (page, size) => {
   let limit = 5;
   let offset =0;
@@ -33,7 +44,6 @@ const getPagingData = (data, page, limit) => {
 exports.create = (req, res) => {
     console.log("Create method has been called");
 
-  // Create a Tutorial
   const employee = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -92,6 +102,21 @@ exports.upload = (req, res) => {
         "success": false
       });
     });
-
-  
 };
+
+exports.emailSend = async (req, res) =>{
+  const emails = {
+    emailids : req.body.emailids,
+    emailsub : req.body.emailsub,
+    emailbody : req.body.emailbody
+  }
+  console.log(emails);
+  let info = await transporter.sendMail({
+    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    to: emails.emailids, // list of receivers
+    subject: emails.emailsub, // Subject line
+    text: emails.emailbody, // plain text body
+  });
+  console.log(info);
+  res.send({"message":true});
+}

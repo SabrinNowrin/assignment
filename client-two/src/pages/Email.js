@@ -57,8 +57,12 @@ function Email() {
       selectedEmails.push(email)
   };
  
-  const clickMe = (data) => {
-    navigate('/compose',{"success":true});
+  const clickMe = () => {
+    if(selectedEmails.length === 0){
+      alert("Select atleast One Employee");
+      return;
+    }
+    navigate('/email/compose',{state:{"emails": selectedEmails}});
   }
   return (
     <div className="container">
@@ -98,9 +102,9 @@ function Email() {
       </div>
  
       <div align="right">
-        <Link to="compose">
-        <Button onClick={()=> clickMe(selectedEmails)}>Compose</Button>
-        </Link>
+        
+        <Button onClick={()=> clickMe()}>Compose</Button>
+
       </div>
     </div>
   );

@@ -5,23 +5,8 @@ const Layout = () => {
     <>
       <nav>
         <Link to="/" style={{ textDecoration: 'none' , marginTop: '3rem'}}>
-            <h1 style={{textAlign:"center", color:"black"}} > TechNext </h1>
+            <h1 style={{textAlign:"center", color:"black"}} > Collect Bean </h1>
         </Link>
-        
-        {/* <ul>
-          <li>
-            <Link to="/add">Add</Link>
-          </li>
-          <li>
-            <Link to="/upload">Upload</Link>
-          </li>
-          <li>
-            <Link to="/list">List</Link>
-          </li>
-          <li>
-            <Link to="/email">Email</Link>
-          </li>
-        </ul> */}
       </nav>
 
       <Outlet />

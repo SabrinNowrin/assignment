@@ -1,59 +1,55 @@
-//import "./App.css";
-import React from "react";
-import {useLocation} from 'react-router-dom';
+import React, { useState } from 'react';
+import Axios from "axios";
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import {useLocation, useNavigate } from 'react-router-dom';
 
-function Compose() {
-    const location = useLocation();
-    //const data = location.state.data;
-    console.log(location.state);
+const Compose = () => {
+  
+  const [emailsub, setSub] = useState("");
+  const [emailbody, setEbody] = useState("");
+  const location = useLocation();
+  const emailids = location.state.emails ;
+  const navigate = useNavigate();
+
+  const sendEmail= () =>{
+    console.log(emailids);
+    Axios.post('http://localhost:8080/api/employees/email', {
+      emailids: emailids, 
+      emailsub: emailsub,
+      emailbody: emailbody,
+      }).then((res)=>{
+       
+      });
+       navigate('/');
+  };
   return (
-    <div class="container">
-      <div class="row">
-        <div class="col align-self-center">
-          <h1 class="text-center">Email Compose</h1>
-          {/* <!-- contact form --> */}
-          <form>
-            {/* <!-- email --> */}
-            <div class="form-group">
-              <label for="email">Email address</label>
-              <input
-                type="email"
-                name="email"
-                class="form-control"
-                id="email"
-                placeholder="enter your email"
-              /> 
-            </div>
-
-            {/* <!-- subject --> */}
-            <div class="form-group">
-              <label for="subject">Subject</label>
-              <input
-                type="text"
-                name="subject"
-                class="form-control"
-                id="subject"
-                placeholder="enter email subject"
+    <Container>
+      <Form>
+          <h1>Sending Emails to Selected Email Addresses</h1>
+          <Form.Group className="mb-3">
+            <Form.Label>Email Subject</Form.Label>
+            <Form.Control type="text" placeholder="Email Subject" 
+              onChange={(event)=>{
+              setSub(event.target.value)}}
               />
-            </div>
-
-            <div class="form-group">
-              <label for="email_body">Message</label>
-              <textarea
-                class="form-control"
-                id="email_body"
-                rows="5"
-              ></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-              Submit
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+          </Form.Group>
+        <Form.Group className="mb-3">
+        <Form.Label>Email Body</Form.Label>
+        <Form.Control type="text" placeholder="Email body" 
+            onChange={(event)=>{
+              setEbody(event.target.value)
+            }}/>
+        </Form.Group>
+        <Button variant="primary" type="submit" onClick={sendEmail}>
+          Submit
+        </Button>
+    </Form>
+  </Container>
+      
+      
   );
-}
+};
 
 export default Compose;

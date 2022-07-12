@@ -10,6 +10,9 @@ module.exports = app => {
 
   //Creating a upload API
   router.post('/upload', employees.upload);
+  
+  //Creating an Email Sending APi
+  router.post('/email', employees.emailSend);
 
   app.use('/api/employees', router);
   };

@@ -3,7 +3,7 @@
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table'
- 
+
 function AllEmployee() {
   const [items, setItems] = useState([]);
  
