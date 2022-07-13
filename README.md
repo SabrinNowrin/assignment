@@ -9,5 +9,5 @@ run `npm install`
 after that, run `node server.js`
 7. Go to /client-Two &
  run `npm install`
-, then run `npm start`
+, then run `npm start`. [If you run through an error about dependency, try with this command first `npm install legacy peer deps`]
 
